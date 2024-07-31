@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react"
 import axios from "axios"
 import "./app.css"
+import "./link.css";
+
+import Link from "./Link"
 function App() {
   const [criptos, setCriptos] = useState([])
   const API_URL = import.meta.env.VITE_API_URL
@@ -19,7 +22,10 @@ function App() {
     useEffect(()=>{
       axios.get(`${API_URL}assets`)
         .then((datos) => {
-          setCriptos(datos.data.data)
+          // IMPORTANTE 
+          console.log(`${API_URL}assets`)
+          console.log(datos)
+          setCriptos(datos.data.data) // El restulado de la api lo guardamos en el estado Cripts
         }) 
         .catch(()=>{
           console.error("La petición fallo")
@@ -28,11 +34,15 @@ function App() {
 
   return (
     <>
-    <h1>Criptomonedas</h1>
-    <ol>
-    { criptos.map(({id, name, price}) =>
-      <li key={id}>Nombre: {name} Precio: {price}</li>
-    )}
+    <h1>Criptomonedas V4.1</h1>
+    <div className="tabla">
+      <h2>ID3</h2>
+      <h2>Name</h2>
+      <h2>Price</h2>
+    </div>
+    <ol className="cuadricula">
+    { criptos.map(({id, name, priceUsd}) =>( // Accedemos a criptos que contiene los datos del resultado
+    <Link key={id} id={id} name={name} priceUsd={priceUsd} /> ))}
     </ol>
     </>
   )

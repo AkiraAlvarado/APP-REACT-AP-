@@ -1,0 +1,4 @@
+.cuadricula{
+   display: flex;
+   flex-direction: column;
+}
